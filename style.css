@@ -1,3 +1,4 @@
+
 /* ============================================================
    The ONE rule that lives above everything, even the palette.
    width now INCLUDES padding and border. Every element, every
@@ -190,10 +191,173 @@ h2 {
   margin-top: 2rem;
 }
 
-p{
-  font-size: 18px;
+/* --- the nav list: the browser's default margin and padding removed,
+       then boxed with its own background so it stands out from the
+       header behind it --- */
+nav ul {
+  margin: 0;
+  padding: .75rem 1.5rem;
+  background-color: var(--accent);
+  border: 1px solid var(--line);
 }
 
-h2{
-  color: var(--background)
+nav li {
+  padding: .25rem 0;
 }
+
+/* --- the cheapest photo frame there is --- */
+img {
+  border: 4px solid #ffffff;
+}
+
+/* COLLAPSING MARGINS — measured, not explained. A paragraph with
+   margin-bottom: 3rem followed by a heading with margin-top: 3rem are
+   3rem apart, not 6rem: when two vertical margins meet, the larger one
+   wins and the smaller disappears into it. */
+
+/* ============================================================
+   The box model, sizing, and outline.
+
+   NOTE: the box-sizing rule is at the TOP of this file, above
+   everything, because it is a reset. Scroll up to see it.
+   ============================================================ */
+
+/* --- Break it, then fix it. With its padding and border, width: 100%
+       made this box wider than main by exactly padding + border.
+       The * rule at the top of the file is what makes it fit again. --- */
+.intro {
+  width: 100%;
+}
+
+/* --- max-width is a ceiling: as big as it can be, never wider than the
+       box it is in. Narrow the window and the photo shrinks with it. --- */
+img {
+  max-width: 100%;
+  height: auto;                          /* keep the proportions */
+}
+
+iframe {
+  max-width: 100%;                       /* the map has width="600" in the HTML */
+}
+
+/* --- the on-page contents box on turkey-run.html --- */
+.contents {
+  max-width: 22rem;
+  background-color: var(--light);
+  padding: .75rem 1.25rem;
+}
+
+/* --- the whole site gets a ceiling too: a reading measure. Then
+       margin: auto splits the leftover space equally, which centres it.
+       (auto only has space to split once there IS a max-width.)
+       A later body rule than the margin: 0 above — the cascade, again. --- */
+body {
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+/* --- OUTLINE is where Tab is. It draws outside the box and takes no
+       space. Never remove it without replacing it with something visible. --- */
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* --- the skip link, now that Tab means something. It sits off-screen
+       until a keyboard user tabs to it, then appears at the top of the
+       page. Nothing else on the site is positioned. --- */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+}
+
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  background-color: var(--dark);
+  color: #ffffff;
+  padding: .5rem 1rem;
+}
+
+/* ============================================================
+   Text and fonts. Two web fonts (linked in every page's head,
+   above this file): Lora for reading, Source Sans 3 for headings.
+   Every size is in rem — a multiple of the user's chosen text size —
+   so the whole site scales when they change it.
+   ============================================================ */
+
+/* --- the reading face: the FIRST font-family on the site. Until today
+       every page was in the browser's default serif, on purpose. The stack
+       is a list of fallbacks, best first, generic family last.
+       A later body rule than the first one, so its font-size wins. --- */
+body {
+  font-family: "Lora", Georgia, "Times New Roman", serif;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* --- the warning was red; now it is bold too --- */
+.warning {
+  font-weight: bold;
+}
+
+/* --- the heading face, and a size scale: 2.4 / 1.4 / 1.05 --- */
+h1,
+h2 {
+  font-family: "Averia Serif Libre", "Segoe UI", Arial, sans-serif;
+}
+
+h1 {
+  font-size: 2.4rem;
+  line-height: 1.15;
+  letter-spacing: -.01em;                /* big text tightens slightly */
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+/* --- the nav reads like a nav: small caps, spaced, no underline.
+       text-transform changes the look without changing the HTML. --- */
+nav a {
+  font-family: "Young Serif", "Segoe UI", Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* --- the details --- */
+blockquote {
+  font-style: italic;
+  font-size: 1.15rem;
+}
+
+cite {
+  font-style: normal;                    /* browsers italicise cite by default */
+  font-weight: 600;
+}
+
+caption {
+  font-weight: 600;
+  text-align: left;
+}
+
+code {
+  font-family: Consolas, "Courier New", monospace;
+  font-size: .95em;                      /* em here: a touch smaller than the text around it */
+}
+
+footer {
+  font-size: .85rem;
+  text-align: center;                    /* the one thing on the site that is centred */
+}
+
+/* Paragraphs stay left-aligned. text-align: justify has no hyphenation on
+   the web and produces rivers; center cannot be read past two lines. */

@@ -15,13 +15,13 @@
        This block lives at the top of the file, above everything, because
        every colour on the site comes from it. --- */
 :root {
-  --dark:       #3f6b1f;   /* grass green — headings, header, links */
-  --light:      #e6dcb8;   /* sandstone tint — tinted boxes, footer */
-  --background: #f4ecd8;   /* parchment/paper — the page, and the box the words sit on */
-  --accent:     #6b4423;   /* oak wood brown, used rarely */
+  --dark:       #3f6b1f;   /* grass — headings, header, links */
+  --light:      #e6dcb8;   /* sand — tinted boxes, footer */
+  --background: #f4ecd8;   /* paper — the page, and the box the words sit on */
+  --accent:     #6b4423;   /* oakwood colored, used rarely */
   --warning:    #b3261e;   /* redstone/lava — only for warnings */
-  --text:       #2b2b2b;   /* body text */
-  --line:       #8c8c7a;   /* stone grey — borders and rules */
+  --text:       #2b2b2b;   /* black for bodytext */
+  --line:       #8c8c7a;   /* stone — borders and rules */
 }
 
 /* ============================================================

@@ -128,7 +128,7 @@ blockquote {
        This one is later in the file, so it wins. That is the cascade. The url() path is relative to THIS FILE, not to the page. --- */
 body {
   background-color: var(--dark);          /* shows while the photo loads, and behind it */
-  background-image: url("images/turkey-run-rocky-hollow.jpg");
+  background-image: url("images/minecraftbackgroundwebsite.webp");
   background-repeat: no-repeat;
   background-position: center top;
   background-size: cover;                 /* fill the window, crop the edges */

@@ -1,4 +1,3 @@
-
 /* ============================================================
    The ONE rule that lives above everything, even the palette.
    width now INCLUDES padding and border. Every element, every
@@ -361,3 +360,425 @@ footer {
 
 /* Paragraphs stay left-aligned. text-align: justify has no hyphenation on
    the web and produces rivers; center cannot be read past two lines. */
+
+
+/* ============================================================
+   Links, lists, icons.
+   ============================================================ */
+
+/* --- LINKS: four pseudo-classes, and the order is not optional. All
+       four have the same weight, so the later one wins — write hover
+       before link and the link colour reapplies on hover. LVHA. --- */
+a:link {
+  color: var(--dark);
+  text-decoration: none;
+}
+
+a:visited {
+  color: var(--accent);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active {
+  color: var(--warning);                        /* the instant of the click */
+}
+
+/* (the nav links' white, and their hover, were written here in L6 and are
+   now in the nested nav block at the end of the file, as &:link, &:visited
+   and &:hover) */
+
+/* --- LISTS: the property goes on the list, not the items. The nav's
+       list-style-type: none is in the nav block too. --- */
+ol {
+  list-style-type: decimal-leading-zero;
+}
+
+ul {
+  list-style-type: square;
+}
+
+.contents ul {
+  list-style-position: inside;           /* markers inside the box, not hanging out of it */
+}
+
+#credits ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+/* --- the description list reads as a glossary --- */
+dt {
+  font-family: "Source Sans 3", "Segoe UI", Arial, sans-serif;
+  font-weight: 700;
+}
+
+dd {
+  margin-left: 0;
+  margin-bottom: .75rem;
+}
+
+/* --- ICONS: Font Awesome is linked in every page's head. An icon is an
+       empty span with two classes and aria-hidden="true", so a screen
+       reader skips the decoration and reads the word. The gap between the
+       icon and the word is in the nav block. --- */
+
+/* ============================================================
+   Tables, display, max-width.
+   ============================================================ */
+
+/* --- A readable table. border-collapse is the one property that makes a
+       table look like a table: without it every cell draws its own border
+       and the lines double. --- */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border: 1px solid var(--line);
+  padding: .5rem .75rem;
+  text-align: left;
+}
+
+th {
+  background-color: var(--light);
+}
+
+/* --- zebra stripes and a row hover, so a reader can follow a row across.
+       nth-child(even) is "every even row". --- */
+tbody tr:nth-child(even) {
+  background-color: rgba(20, 83, 45, 0.04);
+}
+
+tbody tr:hover {
+  background-color: rgba(122, 89, 1, 0.12);
+}
+
+caption {
+  caption-side: top;
+  padding: .5rem 0;
+}
+
+/* --- DISPLAY. inline-block flows like a word but takes width and
+       vertical padding — which is what turns a list into a bar. The items
+       already have padding and no bullets, for exactly this. The rule,
+       nav li { display: inline-block }, is in the nav block now (L8). --- */
+
+/* --- the random-park button does nothing until JavaScript, in the
+       spring. Hidden, not deleted: display: none removes it from the
+       layout and leaves no gap. visibility: hidden would leave a hole. --- */
+#random {
+  display: none;
+}
+
+/* --- max-width, one more time: the quote never gets wider than a
+       comfortable reading measure, whatever the page does. --- */
+blockquote {
+  max-width: 36rem;
+}
+
+/* ============================================================
+   Position, z-index, overflow — and NESTING.
+
+   From today, a rule that belongs to one part of the page is written
+   INSIDE that part's rule:
+
+       nav { a { } }          is the same as     nav a { }
+       a { &:hover { } }      is the same as     a:hover { }
+
+   & means "the thing I am inside". Every browser has understood this
+   since 2024. The nav rules from L3, L5, L6 and L7 are gathered here
+   and the originals are gone: reload, and nothing changed. Then the
+   nav moved out of the header in the HTML and got a bar of its own.
+   ============================================================ */
+
+/* --- POSITION: sticky is in the flow until you scroll past it, then it
+       pins to the edge you name. top: 0 is the edge. z-index decides what
+       sits on top when two positioned things overlap: the caption below is
+       positioned too, and later in the file, so without this it would draw
+       over the nav as it scrolled past. --- */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--dark);
+  padding: .5rem 2rem;
+
+  ul {
+    margin: 0;
+    padding: .5rem 1.5rem;               /* room around the links inside the brown box */
+    border: 0;                           /* no grey outline */
+    list-style-type: none;
+  }
+
+  li {
+    display: inline-block;
+    padding: .25rem 0;
+    margin-right: 1rem;
+  }
+
+  a {
+    font-family: "Source Sans 3", "Segoe UI", Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    font-weight: 600;
+    text-decoration: none;
+
+    /* on the same two states as L6's a:link and a:visited, which carry
+       a pseudo-class and so outweigh a plain "nav a": L14 is the rule */
+    &:link,
+    &:visited {
+      color: #ffffff;
+    }
+
+    &:hover {
+      background-color: var(--light);
+      color: var(--dark);
+    }
+  }
+
+  span {
+    margin-right: .35rem;
+  }
+}
+
+/* --- RELATIVE + ABSOLUTE: the caption sits ON the photo.
+       position: relative on the figure changes nothing you can see. It
+       makes the figure the box the caption measures from; take it away
+       and the caption measures from the page instead. The white frame
+       moves from the img to the figure, so the caption sits inside it. --- */
+.hero {
+  position: relative;
+  margin: 1rem 0 0;
+  border: 4px solid #ffffff;
+
+  img {
+    display: block;                      /* an inline img leaves a text-line gap under it */
+    width: 100%;
+    border: 0;
+  }
+
+  figcaption {
+    position: absolute;                  /* out of the flow; measured from .hero */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: .5rem 1rem;
+    background-color: rgba(20, 83, 45, 0.75);
+    color: #ffffff;
+    font-size: .85rem;
+  }
+}
+
+/* --- OVERFLOW: a table that is wider than the window scrolls inside this
+       box instead of pushing the whole page wider. visible is the default
+       (it spills), hidden clips it, scroll always shows bars, auto shows
+       them only when needed. --- */
+.table-wrap {
+  overflow-x: auto;
+}
+
+/* ============================================================
+   Float, inline-block, align.
+   Two layout tools older than Flexbox and still in every site you
+   use. Float is for text flowing round a photo, and that is all it
+   is for now. inline-block is a row of boxes, with a flaw that is
+   the reason Flexbox exists (U3 L7).
+   ============================================================ */
+
+/* --- FLOAT: the figure moves to one side and the paragraph flows round
+       it. A float only moves what comes AFTER it in the HTML, which is why
+       the figure sits above the paragraph. The margin keeps the words off
+       the frame; the width is what makes it a float and not a full-width
+       photo with nothing beside it.
+
+       display: flow-root on the box is the CONTAIN line. A float is taken
+       out of the flow, so without it the box ends at the paragraph and the
+       photo hangs out of the bottom. overflow: auto did the same job for
+       fifteen years, by accident; flow-root is the one made for it. --- */
+.intro {
+  display: flow-root;
+
+  .hero {
+    float: right;
+    width: 50%;
+    margin: 0 0 .5rem 1.5rem;
+  }
+}
+
+#who {
+  display: flow-root;
+
+  .hero {
+    float: left;
+    width: 45%;
+    margin: 0 1.5rem .5rem 0;
+  }
+}
+
+/* --- CLEAR: a heading never sits beside a float; it starts below it.
+       Written flat, not nested, because it belongs to every h2 on the
+       site and not to one part of the page. --- */
+h2 {
+  clear: both;
+}
+
+/* --- INLINE-BLOCK: three boxes in a row. Each is a word that takes a
+       width, so they sit side by side; vertical-align: top lines up their
+       tops instead of their baselines. 32% three times is 96%: the rest is
+       the SPACE CHARACTER between the </li> and the next <li>, which
+       inline-block treats as a word. That is its famous flaw.
+
+       L10: this was .group, with class="group" on each of the three items.
+       > li is the CHILD combinator: a direct child of .trail-groups, not
+       the li inside the inner lists. The classes came off the HTML. --- */
+.trail-groups {
+  list-style-type: none;
+  padding-left: 0;
+
+  > li {
+    display: inline-block;
+    vertical-align: top;
+    width: 32%;
+    padding: .75rem 1rem;
+    background-color: var(--light);
+    border: 1px solid var(--line);
+
+    /* ALIGN: the card's title centred, as a block of its own */
+    strong {
+      display: block;
+      text-align: center;
+      font-family: "Source Sans 3", "Segoe UI", Arial, sans-serif;
+    }
+
+    ul {
+      margin: .5rem 0 0;
+      padding-left: 1.1rem;
+    }
+  }
+}
+
+/* ============================================================
+   Combinators, pseudo-classes, pseudo-elements.
+
+   A COMBINATOR joins two selectors and says how the elements relate.
+   You have used one since L2: the space, "inside, at any depth". A
+   nested block IS that space. Today the other three get names:
+       >   a direct child           .trail-groups > li
+       +   the very next sibling    h2 + p
+       ~   every later sibling      legend ~ p
+
+   A PSEUDO-CLASS (one colon) is a state the element is in: :hover,
+   :first-child, :checked. A PSEUDO-ELEMENT (two colons) is a part of
+   the element that has no tag of its own: ::first-letter, ::before.
+   ============================================================ */
+
+/* --- ADJACENT SIBLING, +: the element directly after. The first
+       paragraph under a heading sits tight to it. Flat: every h2. --- */
+h2 + p {
+  margin-top: .5rem;
+}
+
+/* --- in the glossary, every term that follows a definition gets air.
+       Nested: the rule belongs to the dl. --- */
+dl {
+  dd + dt {
+    margin-top: 1rem;
+  }
+}
+
+/* --- GENERAL SIBLING, ~: every later sibling. In the fieldset every p
+       after the legend is a radio row; tighten them. --- */
+fieldset {
+  legend ~ p {
+    margin: .35rem 0;
+  }
+}
+
+/* --- PSEUDO-CLASSES on the form: :checked is "ticked", and + reaches
+       the label right after it; :focus-within is "something inside me
+       has focus", so the whole row lights up while you type in it. --- */
+form {
+  input:checked + label {
+    font-weight: 700;
+  }
+
+  p:focus-within {
+    background-color: var(--light);
+  }
+}
+
+/* --- :not(): a separator under every step except the last. :last-child
+       is "I am the last of my siblings"; :not() flips it. --- */
+#route {
+  li:not(:last-child) {
+    border-bottom: 1px dotted var(--line);
+    padding-bottom: .25rem;
+    margin-bottom: .25rem;
+  }
+}
+
+/* :nth-child(even), from L7, is the same family: (even), (odd), (3),
+   (2n+1) — a formula over the element's place among its siblings. */
+
+/* --- PSEUDO-ELEMENTS. ::first-letter is the first letter of the block,
+       as if it had a tag. The drop cap floats (L9) so the lines wrap it.
+       A second .intro block: a later rule for the same box, as with the
+       body rules in L2–L5. --- */
+.intro {
+  p::first-letter {
+    float: left;
+    font-family: "Source Sans 3", "Segoe UI", Arial, sans-serif;
+    font-size: 3rem;
+    line-height: .85;
+    padding-right: .35rem;
+    color: var(--dark);
+  }
+}
+
+/* --- ::before draws a part that is not in the HTML. It needs content,
+       even if empty. A big opening quote mark, positioned on the box
+       (position: relative + absolute, L8); the quote's padding grows to
+       make room for it. --- */
+blockquote {
+  position: relative;
+  padding-left: 3rem;
+  padding-right: 3rem;                   /* room on the right for the closing quote */
+
+  &::before {
+    content: "\201C";
+    position: absolute;
+    left: .8rem;
+    top: .3rem;
+    font-family: "Source Sans 3", "Segoe UI", Arial, sans-serif;
+    font-size: 3rem;
+    line-height: 1;
+    color: var(--accent);
+  }
+
+  &::after {
+    content: "\201D";                    /* the closing curly quote */
+    position: absolute;
+    right: .8rem;
+    bottom: -1.2rem;
+    font-family: "Source Sans 3", "Segoe UI", Arial, sans-serif;
+    font-size: 3rem;
+    line-height: 1;
+    color: var(--accent);
+  }
+}
+
+/* --- ::marker is the bullet or number itself; ::selection is the text
+       the reader has highlighted. Both flat: they are the whole site. --- */
+li::marker {
+  color: var(--accent);
+}
+
+::selection {
+  background-color: var(--dark);
+  color: #ffffff;
+}
